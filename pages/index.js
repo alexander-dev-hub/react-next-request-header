@@ -1,12 +1,18 @@
-import React from 'react'
-import Head from 'next/head'
-import Nav from '../components/nav'
 
-const Home = () => (
+import React from 'react';
+import Head from 'next/head';
+import Nav from '../components/nav';
+import Layout from '../components/layout';
+
+const Home = ({ deviceMemory, ect }) => {
+  console.log('index.js => render');
+  return (
+  <Layout>
   <div>
     <Head>
-      <title>Home</title>
-      <link rel='icon' href='/favicon.ico' />
+      <title>{ deviceMemory }, { ect }</title>
+      <meta httpEquiv='Accept-CH' content='DPR, Width, Viewport-Width, ECT, Device-Memory' />
+      <meta httpEquiv='Accept-CH-Lifetime' content='86400' />
     </Head>
 
     <Nav />
@@ -18,18 +24,15 @@ const Home = () => (
       </p>
 
       <div className='row'>
-        <a href='https://nextjs.org/docs' className='card'>
+        <a href='' className='card'>
           <h3>Documentation &rarr;</h3>
           <p>Learn more about Next.js in the documentation.</p>
         </a>
-        <a href='https://nextjs.org/learn' className='card'>
+        <a href='' className='card'>
           <h3>Next.js Learn &rarr;</h3>
           <p>Learn about Next.js by following an interactive tutorial!</p>
         </a>
-        <a
-          href='https://github.com/zeit/next.js/tree/master/examples'
-          className='card'
-        >
+        <a href='' className='card'>
           <h3>Examples &rarr;</h3>
           <p>Find other example boilerplates on the Next.js GitHub.</p>
         </a>
@@ -83,6 +86,14 @@ const Home = () => (
       }
     `}</style>
   </div>
-)
+  </Layout>);
+}
 
-export default Home
+Home.getInitialProps = ({ req }) => {
+  console.log('index.js => getInitialProps');
+  const deviceMemory = req.headers['device-memory'];
+  const ect = req.headers['ect'];
+  return { deviceMemory, ect }
+};
+
+export default Home;
